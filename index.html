@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="static/jquery-3.2.1.min.js"></script>
+  <script src="static/Chart.min.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+  <!-- <style>    
+    
+    .rectangle {
+	  height: 100px;
+	  width: 100px;
+	  background-color: rgb(28, 29, 26);
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+
+	</style> -->
+	
+	
+
+	<!-- <style>
+	.rectangle1 {
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+	</style> -->
+
+	<style>
+	.rectangle2 {
+	  height: 100px;
+	  width: 100px;
+	  background-color: black;
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+	</style>
+
+	<style>
+
+		.switch {
+	  position: relative;
+	  display: inline-block;
+	  width: 90px;
+	  height: 34px;
+	}
+
+	.switch input {display:none;}
+
+	.slider {
+	  position: absolute;
+	  cursor: pointer;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #eeea19;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	.slider:before {
+	  position: absolute;
+	  content: "";
+	  height: 26px;
+	  width: 26px;
+	  left: 4px;
+	  bottom: 4px;
+	  background-color: rgb(0, 0, 0);
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	input:checked + .slider {
+	  background-color: #e715a1;
+	}
+
+	input:focus + .slider {
+	  box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked + .slider:before {
+	  -webkit-transform: translateX(55px);
+	  -ms-transform: translateX(55px);
+	  transform: translateX(55px);
+	}
+
+	/*------ ADDED CSS ---------*/
+	.on
+	{
+	  display: none;
+	}
+
+	.on, .off
+	{
+	  color: white;
+	  position: absolute;
+	  transform: translate(-50%,-50%);
+	  top: 50%;
+	  left: 50%;
+	  font-size: 10px;
+	  font-family: Verdana, sans-serif;
+	}
+
+	input:checked+ .slider .on
+	{display: block;}
+
+	input:checked + .slider .off
+	{display: none;}
+
+	/*--------- END --------*/
+
+	/* Rounded sliders */
+	.slider.round {
+	  border-radius: 34px;
+	}
+
+	.slider.round:before {
+	  border-radius: 50%;}
+	h1{
+		text-align: center;
+	}
+    footer {
+      background-color: #555;
+      color: rgb(3, 3, 3);
+      padding: 15px;
+    }
+    body { 
+  background: navajowhite; 
+}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="https://portal.ptit.edu.vn/">
+    <img src="/home/duong/Desktop/mangcambien/Mang-Cam-Bien-master/unnamed.png" alt="logo" style="width:50px; height: 50px">
+  </a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+       <h2><center><a class="nav-link" style="font-size:200%; color: blanchedalmond;" href="https://www.facebook.com/boy.captain.77/">Smart Home</a></center></h2>
+    </li>
+   
+  </ul>
+  
+</nav>
+	<h1 style="font-family: 'Roboto', sans-serif; " style="font-size:400%;color:rgb(90, 243, 19);text-align:center;"> Sensor Net </h1>
+<div class="container-fluid text-center">    
+  <div class="row">
+  	<div class="col-sm-12">
+    	<div class="row">
+        	<div id="hum" class="col-sm-3" style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">Humidity<p id='humidity' >0</p></center>
+            </div>
+            <div id="hum" class="col-sm-1" style=" border-top: solid;">
+            	<img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="60px" height="60px">
+            </div>
+            <div id="temp"  class="col-sm-3"	style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">Temperature<p id='temperature'>0</p></center>
+            </div>
+            <div id="temp" class="col-sm-1" style=" border-top: solid;">
+            	<img src="https://cdn0.iconfinder.com/data/icons/nature-1-7/52/7-512.png"  width="60px" height="60px">
+            </div>
+			
+           
+            
+            <div class="col-sm-4"	style="border-left: solid;border-top: solid;border-right: solid;">
+            	<center style="font-size:200%;">Control Device</p></center>
+            </div>
+        </div>
+    </div>	
+    <div class="col-sm-8" style="border-style: solid;">
+      <div class="col-sm-12">
+           <div class="chart-container" style="margin-left: -30px; margin-top: 50px;margin-right: 20px;"><canvas id="myChart" width="300px" height="150px"></canvas></div>
+           <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+           <script>
+            var socket = io.connect('http://localhost:3000');
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+              
+                type: 'line',
+
+                
+                data: {
+                labels: [],
+                datasets: [{
+                    label: "Temp Value",
+                    borderColor: "orange",
+                    data: [],
+                    fill: false,
+                    backgroundColor: 'orange',
+                },
+				{
+                    label: "Hum Value",
+                    borderColor: "navy",
+                    data: [],
+                    fill: false,
+                    backgroundColor: 'navy',
+				},
+				
+				]
+                },
+
+                // Configuration options go here
+                options: {}
+                
+            });
+			
+            socket.on('temp', function(data) { //As a temp data is received 
+                console.log(data.temp);
+				// nhiet do , do am 
+				var my_data = [data.temp , data.hum];
+				console.log(my_data);
+				var index = 0;
+				
+                document.getElementById('temperature').innerHTML = data.temp; 
+                if(data.temp < 30){
+                	document.getElementById('temperature').style.backgroundColor = '#f7c80c';
+                } 
+                if(data.temp >= 30){
+                	document.getElementById('temperature').style.backgroundColor = 'coral';
+                } 
+                document.getElementById('humidity').innerHTML = data.hum; 
+                if(data.hum < 65){
+                	document.getElementById('humidity').style.backgroundColor = '#c4c2bc';
+                }
+                if(data.hum > 65 && data.hum < 80){
+                	document.getElementById('humidity').style.backgroundColor = '#79eaea';
+                }
+                if(data.hum > 80){
+                	document.getElementById('humidity').style.backgroundColor = '#0d8ac4';
+                }
+                
+                if(chart.data.labels.length != 20) {
+                    chart.data.labels.push(data.time);  //Add time in x-asix
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(my_data[index]); //Add temp in y-axis
+						console.log(index);
+						index ++;
+                    });
+                }
+                else { 
+                    chart.data.labels.shift();
+                    chart.data.labels.push(data.time);
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift();
+                        dataset.data.push(my_data[index]);
+						index ++;
+                    });
+                }
+                chart.update(); //Update the graph.
+            });
+
+
+		function calc_led1()
+		{
+				socket.emit("led_status1",{led:document.getElementById('led1').checked});
+				console.log("led1_status change");
+		}
+		var led_status = 1; 
+        
+
+        function clicked_toggle(){
+
+            if (led_status == 1){
+                led_status = 0;
+            }else{
+                led_status = 1;
+            }
+
+            if (led_status > 0){
+              
+                socket.emit("led_status", "1");
+            }else{
+              
+                socket.emit("led_status", "0");
+            }
+            
+            console.log(led_status);
+        };
+	
+        </script>
+      </div>
+     </div>
+    <div class="col-sm-4" style="border-top: solid;">
+      <div class="row">
+      	<div class="col-sm-12">
+      		</br>
+      		</br>
+      		</br>
+      		</br>
+      	</div>
+        <div class="col-sm-12">
+        	<div class="slidecontainer">
+	 			<label class="switch"><input id='led1' type="checkbox" onclick="clicked_toggle()"><div class="slider round"><!--ADDED HTML -->
+	 			<span class="on">ON</span><span class="off">OFF</span><!--END--></div>
+	 			</label>
+	 			<p style="font-size:200%;">LED 1</p>
+	 		
+			
+			</div>
+
+			</div>
+        </div>
+      	
+  	</div>
+</div>
+
+
+
+</body>
+  <footer class="container-fluid text-center">
+	<p style="font-size:200%;">Created by Tung Duong</p>
+  </footer>
+</html>
+
